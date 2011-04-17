@@ -2,7 +2,11 @@
 
 dir=`dirname $0`
 
-PROFILE=${1:-Default}
+## LAST_PROFILE is set to the last created gnome-therminal profile
+LAST_PROFILE=`gconftool-2 -R /apps/gnome-terminal/profiles | grep Profile | \
+    awk 'BEGIN { FS = "/" } ; { print $5 }' | sed -e 's/://g' | sort | tail -n 1`
+
+PROFILE=${1:-${LAST_PROFILE}}
 
 # set palette
 gconftool-2 -s -t string /apps/gnome-terminal/profiles/$PROFILE/palette `cat $dir/colors/palette`
