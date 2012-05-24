@@ -17,3 +17,10 @@ gconftool-2 -s -t string /apps/gnome-terminal/profiles/$PROFILE/bold_color `cat 
 
 # make sure the profile is set to not use theme colors
 gconftool-2 -s -t bool /apps/gnome-terminal/profiles/$PROFILE/use_theme_colors false
+
+#######
+# for guake
+gconftool-2 -s -t string /apps/guake/style/background/color `cat $dir/colors/base03`
+gconftool-2 -s -t string /apps/guake/style/font/color `cat $dir/colors/base0`
+gconftool-2 -s -t string /apps/guake/style/font/palette `cat $dir/colors/palette`
+
