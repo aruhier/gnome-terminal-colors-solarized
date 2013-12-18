@@ -1,30 +1,22 @@
 #!/usr/bin/env bash
 
 dir=$(dirname $0)
-gnomeVersion="$(expr "$(gnome-terminal --version)" : '.* \(.*[.].*[.].*\)$')"
+mateVersion="$(expr "$(mate-terminal --version)" : '.* \(.*[.].*[.].*\)$')"
 
-# newGnome=1 if the gnome-terminal version >= 3.8
-if [[ ("$(echo "$gnomeVersion" | cut -d"." -f1)" = "3" && \
-      "$(echo "$gnomeVersion" | cut -d"." -f2)" -ge 8) || \
-      "$(echo "$gnomeVersion" | cut -d"." -f1)" -ge 4 ]]
-  then newGnome="1"
-  dconfdir=/org/gnome/terminal/legacy/profiles:
+# If the mate-terminal version < 1.6
+if [[ ("$(echo "$mateVersion" | cut -d"." -f1)" = "1" && \
+      "$(echo "$mateVersion" | cut -d"." -f2)" -lt 6) ]]
+  then die "Mate version has to be 1.6 or above your version is $mateVersion"
 
 else
-  newGnome=0
-  gconfdir=/apps/gnome-terminal/profiles
+  dconfdir=/org/mate/terminal/profiles
 fi
 
 declare -a schemes
 schemes=(dark light)
 
 declare -a profiles
-if [ "$newGnome" = "1" ]
-  then profiles=($(dconf list $dconfdir/ | grep ^: | sed 's/\///g'))
-else
-  profiles=($(gconftool-2 -R $gconfdir | grep $gconfdir | cut -d/ -f5 |  \
-           cut -d: -f1))
-fi
+profiles=($(dconf list $dconfdir/ | sed 's/\///g'))
 
 die() {
   echo $1
@@ -52,7 +44,7 @@ show_help() {
   echo "    -s, --scheme"
   echo "        Color scheme to be used"
   echo "    -p, --profile"
-  echo "        Gnome Terminal profile to overwrite"
+  echo "        Mate Terminal profile to overwrite"
   echo
 }
 
@@ -79,14 +71,8 @@ validate_profile() {
 get_profile_name() {
   local profile_name
 
-  # dconf still return "" when the key does not exist, gconftool-2 return 0,
-  # but it does priint error message to STDERR, and command substitution
-  # only gets STDOUT which means nothing at this point.
-  if [ "$newGnome" = "1" ]
-    then profile_name=$(dconf read $dconfdir/$1/visible-name)
-  else
-    profile_name=$(gconftool-2 -g $gconfdir/$1/visible_name)
-  fi
+  # dconf still return "" when the key does not exist.
+  profile_name=$(dconf read $dconfdir/$1/visible-name)
   [[ -z $profile_name ]] && die "$1 is not a valid profile" 3
   echo $profile_name
 }
@@ -109,54 +95,34 @@ set_profile_colors() {
     ;;
   esac
 
-  if [ "$newGnome" = "1" ]
-    then local profile_path=$dconfdir/$profile
+  local profile_path=$dconfdir/$profile
 
-    # set color palette
-    dconf write $profile_path/palette "[$(cat $dir/colors/palette-new)]"
+  # set color palette
+  dconf write $profile_path/palette "[$(cat $dir/colors/palette-new)]"
 
-    # set foreground, background and highlight color
-    dconf write $profile_path/bold-color "'$(cat $bd_color_file)'"
-    dconf write $profile_path/background-color "'$(cat $bg_color_file)'"
-    dconf write $profile_path/foreground-color "'$(cat $fg_color_file)'"
+  # set foreground, background and highlight color
+  dconf write $profile_path/bold-color "'$(cat $bd_color_file)'"
+  dconf write $profile_path/background-color "'$(cat $bg_color_file)'"
+  dconf write $profile_path/foreground-color "'$(cat $fg_color_file)'"
 
-    # make sure the profile is set to not use theme colors
-    dconf write $profile_path/use-theme-colors "false"
+  # make sure the profile is set to not use theme colors
+  dconf write $profile_path/use-theme-colors "false"
 
-    # set highlighted color to be different from foreground color
-    dconf write $profile_path/bold-color-same-as-fg "false"
-
-  else
-    local profile_path=$gconfdir/$profile
-
-    # set color palette
-    gconftool-2 -s -t string $profile_path/palette $(cat $dir/colors/palette)
-
-    # set foreground, background and highlight color
-    gconftool-2 -s -t string $profile_path/bold_color       $(cat $bd_color_file)
-    gconftool-2 -s -t string $profile_path/background_color $(cat $bg_color_file)
-    gconftool-2 -s -t string $profile_path/foreground_color $(cat $fg_color_file)
-
-    # make sure the profile is set to not use theme colors
-    gconftool-2 -s -t bool $profile_path/use_theme_colors false
-
-    # set highlighted color to be different from foreground color
-    gconftool-2 -s -t bool $profile_path/bold_color_same_as_fg false
-  fi
+  # set highlighted color to be different from foreground color
+  dconf write $profile_path/bold-color-same-as-fg "false"
 }
 
 interactive_help() {
   echo
   echo "This script will ask you if you want a light or dark color scheme, and"
-  echo "which Gnome Terminal profile to overwrite."
+  echo "which Mate Terminal profile to overwrite."
   echo
   echo "Please note that there is no uninstall option yet. If you do not wish"
   echo "to overwrite any of your profiles, you should create a new profile"
   echo "before you run this script. However, you can reset your colors to the"
-  echo "Gnome default, by running:"
+  echo "Mate default, by running:"
   echo
-  echo "    Gnome >= 3.8 dconf reset -f /org/gnome/terminal/legacy/profiles:/"
-  echo "    Gnome < 3.8 gconftool-2 --recursive-unset /apps/gnome-terminal"
+  echo "dconf reset -f /org/mate/terminal/profiles:/"
   echo
   echo "By default, it runs in the interactive mode, but it also can be run"
   echo "non-interactively, just feed it with the necessary options, see"
@@ -216,7 +182,7 @@ interactive_select_profile() {
 
   set -- "${profile_names[@]}"
 
-  echo "Please select a Gnome Terminal profile:"
+  echo "Please select a Mate Terminal profile:"
   select profile_name
   do
     if [[ -z $profile_name ]]
@@ -280,9 +246,7 @@ if [[ -z $scheme ]] || [[ -z $profile ]]
 then
   interactive_help
   interactive_select_scheme "${schemes[@]}"
-  if [ "$newGnome" = "1" ]
-    then check_empty_profile
-  fi
+  check_empty_profile
   interactive_select_profile "${profiles[@]}"
   interactive_confirm
 fi
