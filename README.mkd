@@ -1,7 +1,7 @@
-Solarized Colorscheme for Gnome Terminal
+Solarized Colorscheme for Mate Terminal
 ========================================
 
-Scripts for setting the Solarized color set with Gnome Terminal.
+Scripts for setting the Solarized color set with Mate Terminal.
 
 Colors
 ------
@@ -17,8 +17,9 @@ See the [Solarized homepage] for theory behind the colors, screenshots, details
 and colorscheme versions for Vim, Mutt, popular terminal emulators and other
 applications.
 
-For the original works of Ethan Schoonover, visit the [Solarized repository].
-The scripts for Gnome Terminal is maintained in [Gnome Terminal Colors
+For the original works of Ethan Schoonover, visit the [Solarized repository]
+and Sigurd Gartmann work from [Gnome Terminal Colors Solarized repository].
+The scripts for Mate Terminal is maintained in [Mate Terminal Colors
 Solarized repository].
 
 Installation and usage
@@ -27,18 +28,18 @@ Installation and usage
 Clone the [git repository], then run `./solarize`. To change between light and
 dark background, run `./solarize` again.
 
-    $ git clone git://github.com/sigurdga/gnome-terminal-colors-solarized.git
-    $ cd gnome-terminal-colors-solarized
+    $ git clone git://github.com/NeuralSandwich/mate-terminal-colors-solarized.git
+    $ cd mate-terminal-colors-solarized
     $ ./solarize
 
-### Gnome 3.8 or higher
+### Mate 1.6 or higher
 
-If you are running on <b>Linux Mint or Ubuntu</b> with Gnome 3.8 (or higher),
+If you are running on <b>Linux Mint or Ubuntu</b> with Mate 1.6 (or higher),
 do not forget to install dconf-cli if you don't already have it :
 
     $ sudo apt-get install dconf-cli
 
-Only the `install.sh` script is compatible with <b>Gnome-Terminal >= 3.8</b>.
+Only the `install.sh` script is compatible with <b>Mate-Terminal >= 3.8</b>.
 
     $ ./install.sh
     
@@ -47,26 +48,23 @@ And just follow the instructions.
 Uninstall
 ---------
 
-Change to another profile in Gnome Terminal, then remove the Solarized profile
+Change to another profile in Mate Terminal, then remove the Solarized profile
 by running:
 
-### Gnome 3.6 or lower
+### Mate 1.6 or higher
 
-    $ rm -r ~/.gconf/apps/gnome-terminal/profiles/Solarized/
-
-### Gnome 3.8 or higher
-
-For Gnome 3.8 or higher, be sure to have the dconf-cli package installed
+For Mate 1.6 or higher, be sure to have the dconf-cli package installed
 if you are running on Ubuntu or Linux Mint and do :
 
-    $ dconf reset -f /org/gnome/terminal/legacy/profiles:/PROFILE_ID"
+    $ dconf reset -f /org/Mate/terminal/legacy/profiles/PROFILE_ID"
 
 Replace PROFILE_ID by your profile ID (you can get it in your profile
-configuration in gnome-terminal).
+configuration in Mate-terminal).
 
 Contributors
 ------------
 
+* Sean Jones <neuralsandwich@gmail.com>
 * Sigurd Gartmann <sigurdga@sigurdga.no>
 * Paul Thomson <captbunzo@gmail.com>
 * Techlive Zheng <techlivezheng@gmail.com>
@@ -82,7 +80,7 @@ Use the 16 colors terminal option to get VIM to look like GVIM with solarized
 colors.
 
     set t_Co=16
-
+[Mate Terminal Colors Solarized repository]: https://github.com/NeuralSandwich/mate-terminal-colors-solarized
 [Solarized homepage]:   http://ethanschoonover.com/solarized
 [Solarized repository]: https://github.com/altercation/solarized
 [Gnome Terminal Colors Solarized repository]: https://github.com/sigurdga/gnome-terminal-colors-solarized
