@@ -17,7 +17,8 @@ See the [Solarized homepage] for theory behind the colors, screenshots, details
 and colorscheme versions for Vim, Mutt, popular terminal emulators and other
 applications.
 
-For the original works of Ethan Schoonover, visit the [Solarized repository].
+For the original works of Ethan Schoonover, visit the [Solarized repository]
+and Sigurd Gartmann work from [Gnome Terminal Colors Solarized repository].
 The scripts for Mate Terminal is maintained in [Mate Terminal Colors
 Solarized repository].
 
@@ -50,12 +51,12 @@ Uninstall
 Change to another profile in Mate Terminal, then remove the Solarized profile
 by running:
 
-### Mate 3.8 or higher
+### Mate 1.6 or higher
 
-For Mate 3.8 or higher, be sure to have the dconf-cli package installed
+For Mate 1.6 or higher, be sure to have the dconf-cli package installed
 if you are running on Ubuntu or Linux Mint and do :
 
-    $ dconf reset -f /org/Mate/terminal/legacy/profiles:/PROFILE_ID"
+    $ dconf reset -f /org/Mate/terminal/legacy/profiles/PROFILE_ID"
 
 Replace PROFILE_ID by your profile ID (you can get it in your profile
 configuration in Mate-terminal).
