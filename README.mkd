@@ -83,5 +83,5 @@ colors.
 [Mate Terminal Colors Solarized repository]: https://github.com/NeuralSandwich/mate-terminal-colors-solarized
 [Solarized homepage]:   http://ethanschoonover.com/solarized
 [Solarized repository]: https://github.com/altercation/solarized
-[Gnome Terminal Colors Solarized repository]: https://github.com/sigurdga/mate-terminal-colors-solarized
+[Gnome Terminal Colors Solarized repository]: https://github.com/sigurdga/gnome-terminal-colors-solarized
 [ls-colors-solarized]: https://github.com/sigurdga/ls-colors-solarized
