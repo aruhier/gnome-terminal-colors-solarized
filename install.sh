@@ -290,6 +290,9 @@ fi
 if [[ -n $scheme ]] && [[ -n $profile ]]
 then
   validate_scheme $scheme
+  if [ "$profile" == "default" ]; then
+    profile=":$(dconf read ${dconfdir}/default | sed 's/\o047//g')"
+  fi
   validate_profile $profile
   set_profile_colors $profile $scheme
 fi
