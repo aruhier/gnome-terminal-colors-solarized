@@ -1,0 +1,1 @@
+# Official dark hemisu colorscheme
