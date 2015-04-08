@@ -1,0 +1,1 @@
+# Official light hemisu colorscheme
