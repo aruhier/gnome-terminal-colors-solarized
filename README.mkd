@@ -8,6 +8,10 @@ color theme].
 Colorschemes
 ------------
 
+[Dracula][dracula]:
+
+![Dracula](/screenshots/dracula.png?raw=true "Dracula")
+
 [Gotham][vim-gotham]:
 
 ![Gotham](/screenshots/gotham.png?raw=true "Gotham")
@@ -84,6 +88,19 @@ Each theme has is own folder in the `colors` dir. It contains 5 files:
 No additional configuration is needed to add a theme, the installation script
 just list at launch the children folders in the `colors` dir.
 
+Importing iTerm themes
+----------------------
+
+It's possible to import an iTerm colorscheme to a gnome-terminal one. Use the
+script `tools/import_from_iterm.rb`.
+
+Prerequisites: a working ruby installation with the `nokogiri-plist` ruby gem
+(`gem install nokogiri-plist`).
+
+Example call: 
+
+`tools/import_from_iterm.rb my_iterm_colorscheme.itermcolors my_iterm_colorscheme`
+
 Contributors
 ------------
 
@@ -101,6 +118,7 @@ Colorscheme authors
 * [Solarized][Solarized homepage]: Ethan Schoonover
 * [Gotham][vim-gotham]: Andrea Leopardi 
 * [Hemisu][vim-hemisu]: Noah Frederick
+* [Dracula][dracula]: Zeno Rocha
 
 Solarized
 ===
@@ -152,3 +170,4 @@ readme.
 [Gotham]
 [vim-gotham]: https://github.com/whatyouhide/vim-gotham
 [vim-hemisu]: https://github.com/noahfrederick/vim-hemisu 
+[dracula]:    https://github.com/zenorocha/dracula-theme
