@@ -39,6 +39,8 @@ copy_dircolors() {
   echo
   echo "Add \"eval \`dircolors /path/to/dircolorsdb\`\" in your shell "
   echo "configuration file (.bashrc, .zshrc, etc...) to use new dircolors."
+  echo "In case of fish shell add the following to config.fish instead."
+  echo "\"eval (dircolors /path/to/dircolorsdb | head -n 1 | sed 's/^LS_COLORS=/set -x LS_COLORS /;s/;$//')\""
   echo
   echo -en "Do not forget to remove old dircolors from your shell "
   echo -en "configuration file if they were named differently than "
