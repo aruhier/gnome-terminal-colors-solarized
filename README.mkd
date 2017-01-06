@@ -47,6 +47,11 @@ the dark or light solarized theme to the actived gnome-terminal profile. The
 options `--install-dircolors` or `--skip-dircolors` can also be used to install
 or not the solarized dircolors in a non-interactive mode.
 
+To run this script remotely or via cron (or from any shell where
+`DBUS_SESSION_BUS_ADDRESS` is not set), you need to start a dbus connection:
+
+    $ dbus-launch ./install.sh
+
 Uninstall
 ---------
 
