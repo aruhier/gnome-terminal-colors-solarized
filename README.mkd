@@ -86,6 +86,26 @@ files:
 No additional configuration is needed to add a theme, the installation script
 just list at launch the children folders in the `colors` dir.
 
+Dircolors
+---------
+
+The installation script will ask if a solarized dircolors is wanted. It will be
+downloaded and installed as `~/.dir_colors/dircolors`. On CentOS, it can be an
+issue (see issue #62), as the default setup use `~/.dir_colors` as dircolors.
+In that case, you should manually move `~/.dir_colors` as
+`~/.dir_colors/dircolors` before starting the installation script.
+
+If the dircolors is not applied, please check that your shell actually source
+your dircolors:
+```
+if [ -f ~/.dir_colors/dircolors ]
+    then eval `dircolors ~/.dir_colors/dircolors`
+fi
+```
+
+This should not be necessary on major distributions (such as Ubuntu, Fedora,
+etc.) but could be on ArchLinux, Gentoo and others.
+
 Contributors
 ------------
 
