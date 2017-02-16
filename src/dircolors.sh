@@ -21,30 +21,36 @@ dl_dircolors() {
 }
 
 copy_dircolors() {
+  dircolors_dest_path="$DIRCOLORS_DIR/dircolors"
   eval dl_dircolors
   dl_ok=$?
   if [ $dl_ok ]
-    then if [ -f "$DIRCOLORS_DIR/dircolors" ]
-      then mv "$DIRCOLORS_DIR/dircolors" "$DIRCOLORS_DIR/dircolors.old"
-      echo -e "$DIRCOLORS_DIR/dircolors already exists, renaming it to"
-      echo "dircolors.old"
+    # CentOS uses ~/.dir_colors as dir_colors file
+    then if [ -f "$DIRCOLORS_DIR" ]
+      then dircolors_dest_path="$DIRCOLORS_DIR"
+    else
+      mkdir -p "$DIRCOLORS_DIR"
+    fi
+
+    if [ -f "$dircolors_dest_path" ]
+      then mv "$dircolors_dest_path" "$dircolors_dest_path.old"
+      echo -n "$dircolors_dest_path already exists, renaming it to "
+      echo    "$dircolors_dest_path.old"
     fi
   fi
-
-  mkdir -p "$DIRCOLORS_DIR"
-  cp "$DIRCOLORS_SOLARIZED/dircolors" "$DIRCOLORS_DIR/dircolors"
+  cp "$DIRCOLORS_SOLARIZED/dircolors" "$dircolors_dest_path"
 
   echo
-  echo "The new dircolors have been installed to $DIRCOLORS_DIR/dircolors."
+  echo "The new dircolors have been installed as $dircolors_dest_path."
   echo
-  echo "Add \"eval \`dircolors /path/to/dircolorsdb\`\" in your shell "
-  echo "configuration file (.bashrc, .zshrc, etc...) to use new dircolors."
-  echo "In case of fish shell add the following to config.fish instead."
-  echo "\"eval (dircolors /path/to/dircolorsdb | head -n 1 | sed 's/^LS_COLORS=/set -x LS_COLORS /;s/;$//')\""
+  echo -n "Add \"eval \`dircolors /path/to/dircolorsdb\`\" in your shell "
+  echo    "configuration file (.bashrc, .zshrc, etc...) to use new dircolors."
+  echo    "For Fish, add the following to config.fish instead:"
+  echo -e "\teval (dircolors /path/to/dircolorsdb | head -n 1 | sed 's/^LS_COLORS=/set -x LS_COLORS /;s/;$//')"
   echo
   echo -en "Do not forget to remove old dircolors from your shell "
   echo -en "configuration file if they were named differently than "
-  echo -en "\"dircolors\".\n"
+  echo -en "the one newly installed.\n"
   echo
 }
 
