@@ -47,8 +47,8 @@ get_profile_name() {
   # but it does priint error message to STDERR, and command substitution
   # only gets STDOUT which means nothing at this point.
   if [ "$newGnome" = "1" ]
-    then profile_name="$(gsettings get org.gnome.Terminal.Legacy.Profile:$dconfdir/":"$1/ visible-name | sed s/^\'// | \
-        sed s/\'$//)"
+    then profile_name="$(gsettings get org.gnome.Terminal.Legacy.Profile:$dconfdir/":"$1/ visible-name)"
+    profile_name="${profile_name:1:-1}"
   else
     profile_name=$(gconftool-2 -g $gconfdir/$1/visible_name)
   fi
