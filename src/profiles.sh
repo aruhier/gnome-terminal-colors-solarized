@@ -6,7 +6,7 @@ dircolors_checked=false
 
 declare -a profiles
 if [ "$newGnome" = "1" ]
-  then profiles=($(dconf list $dconfdir/ | grep ^: | sed 's/\///g'))
+  then profiles=($(gsettings get org.gnome.Terminal.ProfilesList list | tr -d "[]\',"))
 else
   profiles=($(gconftool-2 -R $gconfdir | grep $gconfdir | cut -d/ -f5 |  \
            cut -d: -f1))
@@ -107,6 +107,6 @@ check_empty_profile() {
   if [ "$profiles" = "" ]
     then interactive_new_profile
     create_new_profile
-    profiles=($(dconf list $dconfdir/ | grep ^: | sed 's/\///g'))
+    profiles=($(gsettings get org.gnome.Terminal.ProfilesList list | tr -d "[]\',"))
   fi
 }
