@@ -28,7 +28,7 @@ validate_scheme() {
 }
 
 set_profile_colors() {
-  local profile=$1
+  local profile=:$1
   local scheme=$2
   local scheme_dir=$dir/colors/$scheme
 

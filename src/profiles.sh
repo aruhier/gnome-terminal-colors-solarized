@@ -6,7 +6,7 @@ dircolors_checked=false
 
 declare -a profiles
 if [ "$newGnome" = "1" ]
-  then profiles=($(dconf list $dconfdir/ | grep ^: | sed 's/\///g'))
+  then profiles=($(gsettings get org.gnome.Terminal.ProfilesList list | tr -d "[]\',"))
 else
   profiles=($(gconftool-2 -R $gconfdir | grep $gconfdir | cut -d/ -f5 |  \
            cut -d: -f1))
@@ -47,8 +47,8 @@ get_profile_name() {
   # but it does priint error message to STDERR, and command substitution
   # only gets STDOUT which means nothing at this point.
   if [ "$newGnome" = "1" ]
-    then profile_name="$(dconf read $dconfdir/$1/visible-name | sed s/^\'// | \
-        sed s/\'$//)"
+    then profile_name="$(gsettings get org.gnome.Terminal.Legacy.Profile:$dconfdir/":"$1/ visible-name)"
+    profile_name="${profile_name:1:-1}"
   else
     profile_name=$(gconftool-2 -g $gconfdir/$1/visible_name)
   fi
@@ -107,6 +107,6 @@ check_empty_profile() {
   if [ "$profiles" = "" ]
     then interactive_new_profile
     create_new_profile
-    profiles=($(dconf list $dconfdir/ | grep ^: | sed 's/\///g'))
+    profiles=($(gsettings get org.gnome.Terminal.ProfilesList list | tr -d "[]\',"))
   fi
 }
