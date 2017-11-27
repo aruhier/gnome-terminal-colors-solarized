@@ -9,18 +9,24 @@ source $dir/src/profiles.sh
 source $dir/src/dircolors.sh
 
 show_help() {
-  echo "Usage: install.sh [-h] [-s <scheme>] [-p <profile>]"
+  echo
+  echo "Usage"
+  echo
+  echo "    install.sh [-h|--help] \\"
+  echo "               (-s <scheme>|--scheme <scheme>|--scheme=<scheme>) \\"
+  echo "               (-p <profile>|--profile <profile>|--profile=<profile>)"
   echo
   echo "Options"
-  echo "  -h, --help"
-  echo "    Show this information"
-  echo "  -s scheme, --scheme scheme, --scheme=scheme"
-  echo "    Color scheme to be used (will be asked otherwise)"
-  echo "  -p profile, --profile profile, --profile profile"
-  echo "    Gnome Terminal profile to overwrite (will be asked otherwise)"
-  echo "  --install-dircolors, --skip-dircolors"
-  echo "    Do or skip the dircolors installation in a non interactive mode"
+  echo
+  echo "    -h, --help"
+  echo "        Show this information"
+  echo "    -s, --scheme"
+  echo "        Color scheme to be used"
+  echo "    -p, --profile"
+  echo "        Gnome Terminal profile to overwrite"
+  echo
 }
+
 
 validate_scheme() {
   local profile=$1
