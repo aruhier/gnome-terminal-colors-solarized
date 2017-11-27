@@ -163,18 +163,18 @@ do
   shift
 done
 
-if [[ -z "$scheme" ]] || [[ -z "$profile" ]]
+if [[ -z $scheme ]] || [[ -z $profile ]]
 then
   interactive_help
 fi
 
-if [[ -n "$scheme" ]]
+if [[ -n $scheme ]]
   then validate_scheme $scheme
 else
   interactive_select_scheme "${schemes[@]}"
 fi
 
-if [[ -n "$profile" ]]
+if [[ -n $profile ]]
   then if [ "$newGnome" = "1" ]
     then profile="$(get_uuid "$profile")"
   fi
@@ -189,7 +189,7 @@ fi
 
 set_profile_colors $profile $scheme
 
-if [ -n "$install_dircolors" ]
+if [[ -n $install_dircolors ]]
     then if "$install_dircolors"
         then copy_dircolors
     fi
