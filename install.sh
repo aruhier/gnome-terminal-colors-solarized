@@ -9,18 +9,27 @@ source $dir/src/profiles.sh
 source $dir/src/dircolors.sh
 
 show_help() {
-  echo "Usage: install.sh [-h] [-s <scheme>] [-p <profile>]"
+  echo
+  echo "Usage"
+  echo
+  echo "    install.sh [-h|--help] \\"
+  echo "               (-s <scheme>|--scheme <scheme>|--scheme=<scheme>) \\"
+  echo "               (-p <profile>|--profile <profile>|--profile=<profile>)"
+  echo "               [OPTION]..."
   echo
   echo "Options"
-  echo "  -h, --help"
-  echo "    Show this information"
-  echo "  -s scheme, --scheme scheme, --scheme=scheme"
-  echo "    Color scheme to be used (will be asked otherwise)"
-  echo "  -p profile, --profile profile, --profile profile"
-  echo "    Gnome Terminal profile to overwrite (will be asked otherwise)"
-  echo "  --install-dircolors, --skip-dircolors"
-  echo "    Do or skip the dircolors installation in a non interactive mode"
+  echo
+  echo "    -h, --help"
+  echo "        Show this information"
+  echo "    -s, --scheme"
+  echo "        Color scheme to be used"
+  echo "    -p, --profile"
+  echo "        Gnome Terminal profile to overwrite"
+  echo "    --install-dircolors, --skip-dircolors"
+  echo "        Do or skip the dircolors installation in a non interactive mode"
+  echo
 }
+
 
 validate_scheme() {
   local profile=$1
@@ -118,7 +127,7 @@ interactive_confirm() {
   echo -n "(YES to continue) "
 
   read confirmation
-  if [[ $(echo $confirmation | tr '[:lower:]' '[:upper:]') != YES ]]
+  if [[ ${confirmation^^} != YES ]]
   then
     die "ERROR: Confirmation failed -- ABORTING!"
   fi
@@ -157,18 +166,18 @@ do
   shift
 done
 
-if [[ -z "$scheme" ]] || [[ -z "$profile" ]]
+if [[ -z $scheme ]] || [[ -z $profile ]]
 then
   interactive_help
 fi
 
-if [[ -n "$scheme" ]]
+if [[ -n $scheme ]]
   then validate_scheme $scheme
 else
   interactive_select_scheme "${schemes[@]}"
 fi
 
-if [[ -n "$profile" ]]
+if [[ -n $profile ]]
   then if [ "$newGnome" = "1" ]
     then profile="$(get_uuid "$profile")"
   fi
@@ -183,7 +192,7 @@ fi
 
 set_profile_colors $profile $scheme
 
-if [ -n "$install_dircolors" ]
+if [[ -n $install_dircolors ]]
     then if "$install_dircolors"
         then copy_dircolors
     fi
