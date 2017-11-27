@@ -127,7 +127,7 @@ interactive_confirm() {
   echo -n "(YES to continue) "
 
   read confirmation
-  if [[ $(echo $confirmation | tr '[:lower:]' '[:upper:]') != YES ]]
+  if [[ ${confirmation^^} != YES ]]
   then
     die "ERROR: Confirmation failed -- ABORTING!"
   fi
