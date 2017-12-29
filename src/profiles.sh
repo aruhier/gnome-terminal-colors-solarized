@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-gnomeVersion="$(expr "$(gnome-terminal --version)" : '.* \(.*[.].*[.].*\)$')"
 dircolors_checked=false
 
 
