@@ -37,7 +37,11 @@ validate_scheme() {
 }
 
 set_profile_colors() {
-  local profile=:$1
+  if [ "$newGnome" = "1" ]
+    then local profile=:$1
+  else
+    local profile=$1
+  fi
   local scheme=$2
   local scheme_dir=$dir/colors/$scheme
 
