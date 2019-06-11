@@ -36,7 +36,7 @@ this can be installed by running
 
 Then clone the repository and you can run the installation script:
 
-    $ git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git
+    $ git clone https://github.com/aruhier/gnome-terminal-colors-solarized.git
     $ cd gnome-terminal-colors-solarized
     $ ./install.sh
 
